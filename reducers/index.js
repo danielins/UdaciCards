@@ -1,12 +1,18 @@
-
+import { ADD_DECKS, NEW_DECK } from '../actions/'
 
 export default function decks(state = {}, action){
 
-	const { type, deck } = action;
+	const { type, deck, decks } = action;
 
 	switch ( type ) {
 
-		case 'NEW_DECK':
+		case ADD_DECKS:
+			return {
+				...state,
+				decks
+			}
+
+		case NEW_DECK:
 			return {
 				...state,
 				[deck.title]:{

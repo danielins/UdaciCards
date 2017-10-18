@@ -25,6 +25,9 @@ class NewDeck extends Component {
 						style={ styles.input }
 						onChangeTExt={ (text) => this.setState({deckName: text}) }
 					/>
+					<TouchableOpacity style={ styles.submitBtn } onPress={ this.sendNewDeck }>
+						<Text style={ styles.submitBtnText }>Send</Text>
+					</TouchableOpacity>
 				</View>
 			</View>
 		)
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: yellow,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   card: {
   	backgroundColor: lightbrown,
@@ -49,11 +52,20 @@ const styles = StyleSheet.create({
   },
   label: {
   	color: white,
-  	fontSize: 20,
+  	fontSize: 25,
   	marginBottom: 5
   },
   input: {
   	height: 40
+  },
+  submitBtn: {
+  	backgroundColor: brown,
+  	padding: 5
+  },
+  submitBtnText: {
+  	color: white,
+  	fontSize: 20,
+  	textAlign: 'center'
   }
 });
 
