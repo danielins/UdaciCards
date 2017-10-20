@@ -4,9 +4,10 @@ import { StyleSheet, StatusBar, Platform, Text, View } from 'react-native'
 import { Constants } from 'expo'
 
 /* redux */
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+import thunk from 'redux-thunk'
 
 /* components */
 import { TabNavigator } from 'react-navigation'
@@ -50,10 +51,12 @@ const Tabs = TabNavigator({
   }
 })
 
+const store = createStore(reducer, applyMiddleware(thunk))
+
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={ createStore(reducer) }>
+      <Provider store={ store }>
         <View style={{ flex: 1 }}>
           <CardsStatusBar backgroundColor={yellow} barStyle='light-content' />
           <Tabs />

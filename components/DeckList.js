@@ -48,9 +48,9 @@ class DeckList extends Component {
 					? decklist.map((deck) => {
 								const currentDeck = decks[deck]
 								return (
-									<TouchableOpacity key={currentDeck.title} onPress={ this.onPress } style={ styles.card }>
+									<TouchableOpacity key={currentDeck.title} onPress={ this.onPress } style={ styles.cardFront }>
 										<Text style={ styles.cardText }>{ currentDeck.title }</Text>
-										<Text style={ styles.cardText }>{ `Questions: ${currentDeck.questions.length}` }</Text>
+										<Text style={ styles.cardText }>{ `Cards: ${currentDeck.questions.length}` }</Text>
 									</TouchableOpacity>
 								)
 							})
@@ -74,15 +74,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: yellow,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
   },
-  card: {
+  cardFront: {
   	backgroundColor: lightbrown,
-  	padding: 20,
   	borderRadius: 5,
   	borderColor: brown,
-  	borderWidth: 15
+  	borderWidth: 15,
+  	flex: 1,
+  	alignItems: 'center',
+  	justifyContent: 'center',
+  	maxHeight: 200,
+  	margin: 10,
+  	padding: 20,
   },
   cardText: {
   	color: white,
