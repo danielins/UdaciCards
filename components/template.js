@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Platform, StyleSHeet } from 'react-native'
+import { View, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 
 class NewDeck extends Component {
-	state = {
-		deckName: ''
-	}
 
 	render(){
 
@@ -17,3 +14,5 @@ class NewDeck extends Component {
 	}
 
 }
+
+export default NewDeck

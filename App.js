@@ -10,12 +10,13 @@ import reducer from './reducers'
 import thunk from 'redux-thunk'
 
 /* components */
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
+import DeckDetail from './components/DeckDetail'
 
 /* style */
-import { yellow, deepblack, lightbrown } from './utils/colors'
+import { yellow, white, black, deepblack, lightbrown } from './utils/colors'
 
 function CardsStatusBar ({ backgroundColor, ...props }){
   return (
@@ -43,10 +44,26 @@ const Tabs = TabNavigator({
     header: null
   },
   tabBarOptions: {
-    activeTintColor: deepblack,
+    headerTintColor: deepblack,
     style: {
       height: 56,
       backgroundColor: lightbrown
+    }
+  }
+})
+
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      title: 'Deck Detail',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: lightbrown
+      }
     }
   }
 })
@@ -59,7 +76,7 @@ export default class App extends React.Component {
       <Provider store={ store }>
         <View style={{ flex: 1 }}>
           <CardsStatusBar backgroundColor={yellow} barStyle='light-content' />
-          <Tabs />
+          <MainNavigator />
         </View>
       </Provider>
     );

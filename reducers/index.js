@@ -1,4 +1,4 @@
-import { ADD_DECKS, NEW_DECK } from '../actions/'
+import { ADD_DECKS, NEW_DECK, DELETE_DECK } from '../actions/'
 
 export default function decks(state = {}, action){
 
@@ -17,9 +17,14 @@ export default function decks(state = {}, action){
 				...state,
 				[title]:{
 					title,
-					question: []
+					questions: []
 				}
 			}
+
+		case DELETE_DECK:
+			let newState = Object.assign({}, state)
+			delete newState[title]
+			return newState
 
 		default:
 			return state

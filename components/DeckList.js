@@ -29,7 +29,16 @@ class DeckList extends Component {
 
 	}
 
-	onPress = () => {
+	selectDeck = (deckTitle) => {
+
+		const { navigation } = this.props
+
+		navigation.navigate(
+			'DeckDetail',
+			{
+				deckTitle
+			}
+		)
 
 	}
 
@@ -48,7 +57,7 @@ class DeckList extends Component {
 					? decklist.map((deck) => {
 								const currentDeck = decks[deck]
 								return (
-									<TouchableOpacity key={currentDeck.title} onPress={ this.onPress } style={ styles.cardFront }>
+									<TouchableOpacity key={currentDeck.title} onPress={ () => this.selectDeck(currentDeck.title) } style={ styles.cardFront }>
 										<Text style={ styles.cardText }>{ currentDeck.title }</Text>
 										<Text style={ styles.cardText }>{ `Cards: ${currentDeck.questions.length}` }</Text>
 									</TouchableOpacity>
@@ -61,13 +70,6 @@ class DeckList extends Component {
 
 	}
 
-}
-
-function mapStateToProps({decks}){
-	return {
-		decklist: decks && Object.keys(decks),
-		decks
-	}
 }
 
 const styles = StyleSheet.create({
@@ -85,8 +87,9 @@ const styles = StyleSheet.create({
   	flex: 1,
   	alignItems: 'center',
   	justifyContent: 'center',
-  	maxHeight: 200,
+  	height: 200,
   	margin: 10,
+  	maxHeight: 200,
   	padding: 20,
   },
   cardText: {
@@ -94,5 +97,13 @@ const styles = StyleSheet.create({
   	fontSize: 20
   }
 })
+
+function mapStateToProps({decks}){
+	console.log('decklist mapStateToProps', decks)
+	return {
+		decklist: decks && Object.keys(decks),
+		decks
+	}
+}
 
 export default connect(mapStateToProps)(DeckList)
