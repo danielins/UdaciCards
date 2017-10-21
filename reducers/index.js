@@ -1,6 +1,6 @@
 import { ADD_DECKS, NEW_DECK, DELETE_DECK } from '../actions/'
 
-export default function decks(state = {}, action){
+function decks(state = {}, action){
 
 	const { type, title, decks } = action;
 
@@ -15,15 +15,20 @@ export default function decks(state = {}, action){
 		case NEW_DECK:
 			return {
 				...state,
-				[title]:{
-					title,
-					questions: []
+				decks:{
+					...state.decks,	
+					[title]:{
+						title,
+						questions: []
+					}
 				}
 			}
 
 		case DELETE_DECK:
 			let newState = Object.assign({}, state)
-			delete newState[title]
+			newState.decks[title] = undefined
+			delete newState.decks[title]
+			console.log('DELETE DECK', newState)
 			return newState
 
 		default:
@@ -32,3 +37,5 @@ export default function decks(state = {}, action){
 	}
 
 }
+
+export default decks

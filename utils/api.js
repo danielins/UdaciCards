@@ -76,5 +76,5 @@ export function deleteDeck(title){
  */
 export function eraseDeck(title, dispatch){
 	return deleteDeck(title)
-	.then(() => dispatch( removeDeck ))
+	.then(() => dispatch( removeDeck(title) ))
 }

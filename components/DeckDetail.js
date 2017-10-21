@@ -23,13 +23,17 @@ class DeckDetail extends Component {
 		const { dispatch, navigation } = this.props
 
 		eraseDeck(deckTitle, dispatch)
-		.then(() => navigation.navigate('Tabs'))
 
 	}
 
 	render(){
 
-		const { deck } = this.props
+		const { deck, navigation } = this.props
+
+    if ( !deck ){
+      navigation.back('Home')
+      return false
+    }
 
 		return (
 			<View style={ styles.container }>

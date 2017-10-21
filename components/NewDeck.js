@@ -22,10 +22,12 @@ class NewDeck extends Component {
 
   sendNewDeck = () => {
 
-    const { dispatch } = this.props;
+    const { dispatch } = this.props
     const { deckName } = this.state
 
     submitDeck(deckName, dispatch)
+
+    this.setState({deckName: ''})
 
   }
 
@@ -37,6 +39,7 @@ class NewDeck extends Component {
 					<Text style={ styles.label }>Name of the your new deck:</Text>
 					<TextInput
 						style={ styles.input }
+            value={ this.state.deckName }
 						onChangeText={ (text) => this.setState({deckName: text}) }
 					/>
 					<TouchableOpacity style={ styles.submitBtn } onPress={ this.sendNewDeck }>
