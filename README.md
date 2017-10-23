@@ -5,7 +5,7 @@ Third and last project made for the Udacity React Development Nanodegree, featur
 
 Consists on a Flashcard application that allows the creating of decks of flashcards with questions and answers to help students to study.
 
-App developed and tested on a Moto G 5 Plus, with Android 7.0 using Expo.
+**App developed and tested on a Moto G 5 Plus, with Android 7.0 using Expo.**
 
 ### Install the Application
 
@@ -34,6 +34,4 @@ To stop the application, use `CTRL+C` keyboard command on your console prompt.
 
 You can run this application directly on your Expo app using the follow url:
 
-```
 [https://exp.host/@danielins/udacicards](https://exp.host/@danielins/udacicards)
-```
