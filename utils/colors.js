@@ -12,4 +12,5 @@ export const lightyellow = "#f0c75e"
 export const lightbrown = "#726255"
 export const brown = "#372e29"
 
-export const red = "#f00"
+export const green = "#0a0"
+export const red = "#a00"

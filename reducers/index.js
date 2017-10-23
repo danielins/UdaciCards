@@ -1,8 +1,8 @@
-import { ADD_DECKS, NEW_DECK, DELETE_DECK } from '../actions/'
+import { ADD_DECKS, NEW_DECK, DELETE_DECK, ADD_QUESTION } from '../actions/'
 
 function decks(state = {}, action){
 
-	const { type, title, decks } = action;
+	const { type, title, decks, question } = action;
 
 	switch ( type ) {
 
@@ -25,11 +25,30 @@ function decks(state = {}, action){
 			}
 
 		case DELETE_DECK:
-			let newState = Object.assign({}, state)
-			newState.decks[title] = undefined
-			delete newState.decks[title]
-			console.log('DELETE DECK', newState)
-			return newState
+			return {
+				...state,
+				decks: Object.keys(state.decks)
+							.filter((deck) => deck.title === title)
+							.reduce((decks, current) => {
+								decks[current] = state.decks[current]
+								return decks
+							}, {})
+			}
+
+		case ADD_QUESTION:
+			return {
+				...state,
+				decks: {
+					...state.decks,
+					[title]: {
+						title,
+						questions: [
+							...state.decks[title].questions,
+							question
+						]
+					}
+				}
+			}
 
 		default:
 			return state

@@ -2,6 +2,7 @@
 import React from 'react'
 import { StyleSheet, StatusBar, Platform, Text, View } from 'react-native'
 import { Constants } from 'expo'
+import { setLocalNotification } from './utils/helpers'
 
 /* redux */
 import { createStore, applyMiddleware } from 'redux'
@@ -14,6 +15,8 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
+import AddQuestion from './components/AddQuestion'
+import Quiz from './components/Quiz'
 
 /* style */
 import { yellow, white, black, deepblack, lightbrown } from './utils/colors'
@@ -65,12 +68,37 @@ const MainNavigator = StackNavigator({
         backgroundColor: lightbrown
       }
     }
+  },
+  AddQuestion: {
+    screen: AddQuestion,
+    navigationOptions: {
+      title: 'Add Question',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: lightbrown
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Add Question',
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: lightbrown
+      }
+    }
   }
 })
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
 export default class App extends React.Component {
+
+  componentDidMount(){
+    setLocalNotification()
+  }
+
   render() {
     return (
       <Provider store={ store }>

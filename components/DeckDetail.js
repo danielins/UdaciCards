@@ -1,8 +1,14 @@
+/* core */
 import React, { Component } from 'react'
+import { NavigationActions } from 'react-navigation'
+
+/* components */
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 
 /* redux */
 import { connect } from 'react-redux'
+
+/* api */
 import { eraseDeck } from '../utils/api'
 
 /* styles */
@@ -10,46 +16,75 @@ import { yellow, lightbrown, brown, white, black, deepblack, red } from '../util
 
 class DeckDetail extends Component {
 
-	addQuestion = () => {
+  // do not rerender if there will be no deck (after deletion)
+  shouldComponentUpdate({deck}){
+    return deck ? true : false
+  }
+
+  // navigates to the new question form
+  addQuestion = (deckTitle) => {
+
+    const { navigation } = this.props
+
+    navigation.navigate(
+      'AddQuestion',
+      {
+        deckTitle
+      }
+    )
+
+  }
+
+  // navigates to the quiz screen
+  startQuiz = (deckTitle) => {
+
+    const { navigation, deck } = this.props
+
+    navigation.navigate(
+      'Quiz',
+      {
+        deck
+      }
+    )
 
 	}
 
-	startQuiz = () => {
-
-	}
-
+  // deletes this deck
 	deleteDeck = (deckTitle) => {
 
 		const { dispatch, navigation } = this.props
 
+    // deletes from the store and the api
 		eraseDeck(deckTitle, dispatch)
+
+    // go back to deck listing
+    navigation.dispatch(NavigationActions.back())
 
 	}
 
 	render(){
 
-		const { deck, navigation } = this.props
-
-    if ( !deck ){
-      navigation.back('Home')
-      return false
-    }
+    const { deck } = this.props
 
 		return (
 			<View style={ styles.container }>
 
-				<TouchableOpacity onPress={ this.onPress } style={ styles.cardFront }>
+				<View style={ styles.cardFront }>
 					<Text style={ styles.cardText }>{ deck.title }</Text>
 					<Text style={ styles.cardText }>{ `Cards: ${deck.questions.length}` }</Text>
-				</TouchableOpacity>
+				</View>
 
-				<TouchableOpacity onPress={ this.addQuestion } style={[ styles.button, {backgroundColor: deepblack} ]}>
+				<TouchableOpacity onPress={ () => this.addQuestion(deck.title) } style={[ styles.button, {backgroundColor: deepblack} ]}>
 					<Text style={ styles.buttonText }>Add Card</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity onPress={ this.startQuiz } style={[ styles.button ]}>
-					<Text style={ styles.buttonText }>Start Quiz</Text>
-				</TouchableOpacity>
+        {
+          deck.questions.length
+          ? ( <TouchableOpacity onPress={ () => this.startQuiz(deck.title) } style={[ styles.button ]}>
+          			<Text style={ styles.buttonText }>Start Quiz</Text>
+          		</TouchableOpacity> )
+          : null
+        }
 
 				<TouchableOpacity onPress={ () => this.deleteDeck(deck.title) } style={[ styles.button, {backgroundColor: red} ]}>
 					<Text style={ styles.buttonText }>Delete Deck</Text>

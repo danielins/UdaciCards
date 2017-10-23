@@ -1,6 +1,10 @@
+/* core */
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import { AppLoading } from 'expo'
+import { Dimensions } from 'react-native'
+
+/* components */
+import { View, ScrollView, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 
 /* redux */
 import { connect } from 'react-redux'
@@ -29,6 +33,7 @@ class DeckList extends Component {
 
 	}
 
+	// navigates to the chosen deck detail
 	selectDeck = (deckTitle) => {
 
 		const { navigation } = this.props
@@ -52,20 +57,22 @@ class DeckList extends Component {
 		}
 
 		return (
-			<View style={ styles.container }>
-				{ decklist.length
-					? decklist.map((deck) => {
-								const currentDeck = decks[deck]
-								return (
-									<TouchableOpacity key={currentDeck.title} onPress={ () => this.selectDeck(currentDeck.title) } style={ styles.cardFront }>
-										<Text style={ styles.cardText }>{ currentDeck.title }</Text>
-										<Text style={ styles.cardText }>{ `Cards: ${currentDeck.questions.length}` }</Text>
-									</TouchableOpacity>
-								)
-							})
-					: <Text>You don't have decks yet.</Text>
-				}
-			</View>
+			<ScrollView style={{ backgroundColor: yellow, height: Dimensions.get('window').height }}>
+				<View style={ styles.container }>
+					{ decklist.length
+						? decklist.map((deck) => {
+									const currentDeck = decks[deck]
+									return (
+										<TouchableOpacity key={currentDeck.title} onPress={ () => this.selectDeck(currentDeck.title) } style={ styles.cardFront }>
+											<Text style={ styles.cardText }>{ currentDeck.title }</Text>
+											<Text style={ styles.cardText }>{ `Cards: ${currentDeck.questions.length}` }</Text>
+										</TouchableOpacity>
+									)
+								})
+						: <Text style={ styles.noCards }>You don't have decks yet.</Text>
+					}
+				</View>
+			</ScrollView>
 		)
 
 	}
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: yellow,
     alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   cardFront: {
   	backgroundColor: lightbrown,
@@ -95,11 +102,14 @@ const styles = StyleSheet.create({
   cardText: {
   	color: white,
   	fontSize: 20
+  },
+  noCards: {
+  	fontSize: 20,
+  	textAlign: 'center'
   }
 })
 
 function mapStateToProps({decks}){
-	console.log('decklist mapStateToProps', decks)
 	return {
 		decklist: decks && Object.keys(decks),
 		decks
